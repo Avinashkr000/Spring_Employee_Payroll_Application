@@ -1,9 +1,6 @@
 package com.bridgelabz.employeepayrollapplication.controller;
 
-
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
@@ -18,7 +15,7 @@ public class EmployeeController {
     public String getEmployee(@PathVariable int id) {
         return "Fetching employee with ID: " + id;
     }
-
+    {"name": "John Doe", "salary": 50000}
     @PostMapping("/create")
     public String createEmployee(@RequestBody String employee) {
         return "Employee created: " + employee;
