@@ -1,10 +1,19 @@
 package com.bridgelabz.employeepayrollapplication.controller;
 
+import com.bridgelabz.employeepayrollapplication.dto.EmployeeDTO;
+import com.bridgelabz.employeepayrollapplication.model.Employee;
+import com.bridgelabz.employeepayrollapplication.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping("/welcome")
     public String welcome() {
@@ -12,22 +21,30 @@ public class EmployeeController {
     }
 
     @GetMapping("/get/{id}")
-    public String getEmployee(@PathVariable int id) {
-        return "Fetching employee with ID: " + id;
-    }
-    {"name": "John Doe", "salary": 50000}
-    @PostMapping("/create")
-    public String createEmployee(@RequestBody String employee) {
-        return "Employee created: " + employee;
+    public Employee getEmployee(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id);
     }
 
-    @PutMapping("/update")
-    public String updateEmployee(@RequestBody String employee) {
-        return "Employee updated: " + employee;
+    @GetMapping("/get-all")
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    @PostMapping("/create")
+    public Employee createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = new Employee(employeeDTO.name, employeeDTO.salary);
+        return employeeService.createEmployee(employee);
+    }
+
+    @PutMapping("/update/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
+        Employee employeeDetails = new Employee(employeeDTO.name, employeeDTO.salary);
+        return employeeService.updateEmployee(id, employeeDetails);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable int id) {
+    public String deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployee(id);
         return "Employee deleted with ID: " + id;
     }
 }
