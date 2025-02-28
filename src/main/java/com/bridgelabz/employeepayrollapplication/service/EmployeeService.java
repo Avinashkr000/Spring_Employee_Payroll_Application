@@ -1,11 +1,8 @@
 package com.bridgelabz.employeepayrollapplication.service;
 
-import com.bridgelabz.employeepayrollapplication.controller.EmployeeController;
 import com.bridgelabz.employeepayrollapplication.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeepayrollapplication.model.Employee;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;

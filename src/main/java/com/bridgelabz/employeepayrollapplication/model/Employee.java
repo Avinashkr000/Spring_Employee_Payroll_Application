@@ -1,33 +1,48 @@
 package com.bridgelabz.employeepayrollapplication.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.ToString;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
+@ToString
 @Entity
+@Table(name = "employee_payroll")
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Validation: Name must not be empty and must start with a capital letter
     @NotEmpty(message = "Name must not be empty")
     @Pattern(regexp = "^[A-Z][a-zA-Z ]*$",
             message = "Name must start with a capital letter and contain only letters and spaces")
     private String name;
 
+    @NotEmpty(message = "Gender is required")
+    @Pattern(regexp = "male|female", flags = Pattern.Flag.CASE_INSENSITIVE,
+            message = "Gender must be either male or female")
+    private String gender;
+
+    @NotNull(message = "Salary is required")
     private double salary;
 
-    public Employee() {}
+    @NotNull(message = "Start date is required")
+    @PastOrPresent(message = "Start date must be in the past or present")
+    @JsonFormat(pattern = "dd MMM yyyy")
+    private LocalDate startDate;
 
-    public Employee(String name, double salary) {
-        this.name = name;
-        this.salary = salary;
-    }
+    @NotBlank(message = "Note must not be blank")
+    private String note;
+
+    @NotBlank(message = "Profile picture must not be blank")
+    private String profilePic;
+
+    @NotNull(message = "Department is required")
+    @ElementCollection
+    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "employee_id"))
+    @Column(name = "department")
+    private List<@NotBlank(message = "Department must not be blank") String> department;
 }
