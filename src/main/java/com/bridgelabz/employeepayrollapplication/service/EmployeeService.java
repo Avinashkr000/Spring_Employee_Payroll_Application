@@ -1,10 +1,14 @@
 package com.bridgelabz.employeepayrollapplication.service;
 
+import com.bridgelabz.employeepayrollapplication.controller.EmployeeController;
+import com.bridgelabz.employeepayrollapplication.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeepayrollapplication.model.Employee;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -23,8 +27,9 @@ public class EmployeeService {
         return employeeList.stream()
                 .filter(emp -> emp.getId().equals(id))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
     }
+
 
     public Employee createEmployee(Employee employee) {
         // Simulate ID generation
