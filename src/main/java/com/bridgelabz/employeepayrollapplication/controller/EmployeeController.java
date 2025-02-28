@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Slf4j
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired
-    public EmployeeService service;
+    private EmployeeService service;
 
     @GetMapping("/")
     public List<Employee> getAllEmployees() {
