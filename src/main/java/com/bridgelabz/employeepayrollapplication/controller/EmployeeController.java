@@ -1,15 +1,14 @@
 package com.bridgelabz.employeepayrollapplication.controller;
-
 import com.bridgelabz.employeepayrollapplication.controller.EmployeeController;
-import com.bridgelabz.employeepayrollapplication.controller.EmployeeController;
-import com.bridgelabz.employeepayrollapplication.model.Employee;
 import com.bridgelabz.employeepayrollapplication.service.EmployeeService;
+import com.bridgelabz.employeepayrollapplication.model.Employee;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/employee")
@@ -32,12 +31,13 @@ public class EmployeeController {
 
     @PostMapping("/create")
     public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        // Validation is triggered by @Valid before reaching the service
+        log.info("Creating employee: {}", employee);
         return service.createEmployee(employee);
     }
 
     @PutMapping("/update/{id}")
     public Employee updateEmployee(@PathVariable Long id, @Valid @RequestBody Employee employee) {
+        log.info("Updating employee with ID: {}", id);
         return service.updateEmployee(id, employee);
     }
 
