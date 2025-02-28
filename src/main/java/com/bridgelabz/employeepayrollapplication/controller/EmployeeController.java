@@ -4,6 +4,7 @@ import com.bridgelabz.employeepayrollapplication.controller.EmployeeController;
 import com.bridgelabz.employeepayrollapplication.controller.EmployeeController;
 import com.bridgelabz.employeepayrollapplication.model.Employee;
 import com.bridgelabz.employeepayrollapplication.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +31,16 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    public Employee createEmployee(@RequestBody Employee employee) {
-        log.info("Creating employee: {}", employee);
+    public Employee createEmployee(@Valid @RequestBody Employee employee) {
+        // Validation is triggered by @Valid before reaching the service
         return service.createEmployee(employee);
     }
 
     @PutMapping("/update/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        log.info("Updating employee with ID: {}", id);
+    public Employee updateEmployee(@PathVariable Long id, @Valid @RequestBody Employee employee) {
         return service.updateEmployee(id, employee);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public void deleteEmployee(@PathVariable Long id) {
